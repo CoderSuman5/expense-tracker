@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Tracker</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+     <div class="container">
+        <h1>Expanse Tracker</h1>
+        <!-- adding expanse section -->
+        <div class="expanse-form">
+           <input type="text" id="expanseName" placeholder="Expanse name">
+           <input type="number" id="expanseAmount" placeholder="Amount">
+           <button id="addBtn">Add Expanse</button>
+        </div>
+
+        <!-- message -->
+         <p id="message"></p>
+
+         <!-- expanse list -->
+          <div>
+            <h2>Expanses</h2>
+            <ul id="expenseList"></ul>
+          </div>
+
+          <!-- total expanse -->
+           <div class="total-box">
+            <h2>Total Expanse</h2>
+            <p id="total">0</p>
+           </div>
+     </div>
+
+     
+    <script src="script.js"></script>
+</body>
+</html>

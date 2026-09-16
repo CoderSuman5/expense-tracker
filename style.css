@@ -1,0 +1,99 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    background-color: wheat;
+    min-height: 120vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.container{
+    width: 500px;
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+    padding: 30px;
+}
+h1{
+    text-align: center;
+    margin-bottom: 25px;
+}
+.expanse-form{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.expanse-form input{
+    padding: 10px;
+    font-size: 12px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+#addBtn{
+    padding: 10px;
+    background-color: #333;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    color: white;
+    cursor: pointer;
+}
+#addBtn:hover{
+    background-color: #111;
+}
+#message{
+    text-align: center;
+    margin-top: 10px;
+    font-weight: bold;
+}
+.total-box{
+    text-align: center;
+    margin: 10px 5px;
+    padding: 15px;
+    border-radius: 5px;
+    background-color: #f5f5f5;
+}
+#total{
+    font-size: 30px;
+    font-weight: bold;
+    margin-top: 10px;
+}
+#expenseList{
+    list-style: none;
+    margin-top: 13px;
+
+}
+.expense-item{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+.expense-info{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+.expense-name{
+    font-weight: bold;
+}
+.expense-amount{
+    color: #444;
+}
+.delete-btn{
+    padding: 10px;
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.delete-btn:hover{
+    background-color: #c0392b;
+}
