@@ -6,12 +6,14 @@ const addButton = document.getElementById("addBtn")
 const expenseList = document.getElementById("expenseList")
 const total = document.getElementById("total")
 const message = document.getElementById("message")
+const expenseDate = document.getElementById("expenseDate")
 
 addButton.addEventListener("click", addExpense)
 
 function addExpense(){
     const name = expenseName.value.trim()
     const amount = Number(expenseAmount.value)
+    const date = expenseDate.value
 
     if (name === "") {
         message.textContent = "Please enter expense name"
@@ -31,10 +33,16 @@ function addExpense(){
         return
     }
 
+    if (date === "") {
+        message.textContent = "Please enter a valid date"
+        message.style.color = "red"
+    }
+
     const expense = {
         id: Date.now(),
         name: name,
-        amount: amount 
+        amount: amount, 
+        date: date
     }
 
     expenses.push(expense)
@@ -45,6 +53,7 @@ function addExpense(){
     expenseName.value = ""
     expenseAmount.value = ""
     message.textContent = ""
+    expenseDate.value = ""
 
     //  here i need to call the display function and calulate funtion
     displayExpenses()
@@ -60,8 +69,8 @@ function displayExpenses(){
         const li = document.createElement("li")
         li.classList.add("expense-item")
 
-        const expneseInfo = document.createElement("div")
-        expneseInfo.classList.add("expense-info")
+        const expenseInfo = document.createElement("div")
+        expenseInfo.classList.add("expense-info")
 
         const nameElement = document.createElement("span")
         nameElement.classList.add("expense-name")
@@ -71,8 +80,13 @@ function displayExpenses(){
         amountElement.classList.add("expense-amount")
         amountElement.textContent = "$" + expense.amount
 
-        expneseInfo.appendChild(nameElement)
-        expneseInfo.appendChild(amountElement)
+        const dateElement = document.createElement("span")
+        dateElement.classList.add = ("expense-date")
+        dateElement.textContent = expense.date
+
+        expenseInfo.appendChild(nameElement)
+        expenseInfo.appendChild(amountElement)
+        expenseInfo.appendChild(dateElement)
 
         const deleteButton = document.createElement("button")
         deleteButton.textContent = "Delete"
@@ -83,7 +97,7 @@ function displayExpenses(){
 
         })
 
-        li.appendChild(expneseInfo)
+        li.appendChild(expenseInfo)
         li.appendChild(deleteButton)
 
         expenseList.appendChild(li)
@@ -117,4 +131,3 @@ function calculateTotal(){
 
 displayExpenses()
 calculateTotal()
-

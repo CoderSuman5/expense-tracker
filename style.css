@@ -85,6 +85,10 @@ h1{
 }
 .expense-amount{
     color: #444;
+}      
+.expense-date{
+  color: #777;
+  font-size: 14px;
 }
 .delete-btn{
     padding: 10px;
