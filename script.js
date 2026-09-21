@@ -8,8 +8,10 @@ const total = document.getElementById("total")
 const message = document.getElementById("message")
 const expenseDate = document.getElementById("expenseDate")
 const expenseCategory = document.getElementById("expenseCategory")
+const searchInput = document.getElementById("searchInput")
 
 addButton.addEventListener("click", addExpense)
+searchInput.addEventListener("input", searchExpenses)
 
 function addExpense(){
     const name = expenseName.value.trim()
@@ -72,10 +74,18 @@ function addExpense(){
 
 }
 
-function displayExpenses(){
+function searchExpenses(){
+    const searchText = searchInput.value.toLowerCase().trim()
+    const filteredExpenses = expenses.filter(function(expense){
+        return expense.name.toLowerCase().includes(searchText)
+    })
+    displayExpenses(filteredExpenses)
+}
+
+function displayExpenses(expensesToDisplay = expenses){
     expenseList.innerHTML = ""
 
-    expenses.forEach(function(expense){
+    expensesToDisplay.forEach(function(expense){
 
         const li = document.createElement("li")
         li.classList.add("expense-item")

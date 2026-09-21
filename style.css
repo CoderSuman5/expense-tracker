@@ -104,6 +104,20 @@ h1{
 #expenseCategory option:first-child{
     color: #777;
 }
+.search-box{
+    margin-top: 20px;
+}
+.search-box input{
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+.search-box input:focus{
+    outline: none;
+    border-color: #555;
+}
 .delete-btn{
     padding: 10px;
     background-color: #e74c3c;
