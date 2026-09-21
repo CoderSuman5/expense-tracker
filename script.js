@@ -7,6 +7,7 @@ const expenseList = document.getElementById("expenseList")
 const total = document.getElementById("total")
 const message = document.getElementById("message")
 const expenseDate = document.getElementById("expenseDate")
+const expenseCategory = document.getElementById("expenseCategory")
 
 addButton.addEventListener("click", addExpense)
 
@@ -14,6 +15,7 @@ function addExpense(){
     const name = expenseName.value.trim()
     const amount = Number(expenseAmount.value)
     const date = expenseDate.value
+    const category = expenseCategory.value
 
     if (name === "") {
         message.textContent = "Please enter expense name"
@@ -36,13 +38,21 @@ function addExpense(){
     if (date === "") {
         message.textContent = "Please enter a valid date"
         message.style.color = "red"
+        return
+    }
+
+    if (category === "") {
+        message.textContent = "Please enter a valid category"
+        message.style.color = "red"
+        return
     }
 
     const expense = {
         id: Date.now(),
         name: name,
         amount: amount, 
-        date: date
+        date: date,
+        category: category
     }
 
     expenses.push(expense)
@@ -54,6 +64,7 @@ function addExpense(){
     expenseAmount.value = ""
     message.textContent = ""
     expenseDate.value = ""
+    expenseCategory.value = ""
 
     //  here i need to call the display function and calulate funtion
     displayExpenses()
@@ -84,9 +95,14 @@ function displayExpenses(){
         dateElement.classList.add = ("expense-date")
         dateElement.textContent = expense.date
 
+        const categoryElement = document.createElement("span")
+        categoryElement.classList.add = ("expense-category")
+        categoryElement.textContent = expense.category
+
         expenseInfo.appendChild(nameElement)
         expenseInfo.appendChild(amountElement)
         expenseInfo.appendChild(dateElement)
+        expenseInfo.appendChild(categoryElement)
 
         const deleteButton = document.createElement("button")
         deleteButton.textContent = "Delete"

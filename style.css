@@ -32,6 +32,7 @@ h1{
     font-size: 12px;
     border-radius: 5px;
     border: 1px solid #ccc;
+  
 }
 #addBtn{
     padding: 10px;
@@ -89,6 +90,19 @@ h1{
 .expense-date{
   color: #777;
   font-size: 14px;
+}
+.expense-category{
+    font-size: 14px;
+    font-weight: bold;
+    margin-top: 2px;
+}
+#expenseCategory option {
+    padding: 10px;
+    font-size: 16px;
+    background-color: white;
+}
+#expenseCategory option:first-child{
+    color: #777;
 }
 .delete-btn{
     padding: 10px;
