@@ -9,9 +9,11 @@ const message = document.getElementById("message")
 const expenseDate = document.getElementById("expenseDate")
 const expenseCategory = document.getElementById("expenseCategory")
 const searchInput = document.getElementById("searchInput")
+const filterCategory = document.getElementById("filterCategory")
 
 addButton.addEventListener("click", addExpense)
-searchInput.addEventListener("input", searchExpenses)
+searchInput.addEventListener("input", filterExpenses)
+filterCategory.addEventListener("change", filterExpenses)
 
 function addExpense(){
     const name = expenseName.value.trim()
@@ -74,11 +76,26 @@ function addExpense(){
 
 }
 
-function searchExpenses(){
+// function searchExpenses(){
+//     const searchText = searchInput.value.toLowerCase().trim()
+//     const filteredExpenses = expenses.filter(function(expense){
+//         return expense.name.toLowerCase().includes(searchText)
+//     })
+//     displayExpenses(filteredExpenses)
+// }
+
+function filterExpenses(){
     const searchText = searchInput.value.toLowerCase().trim()
+    const selectedCategory = filterCategory.value
+    
     const filteredExpenses = expenses.filter(function(expense){
-        return expense.name.toLowerCase().includes(searchText)
+
+        const matchesSearch = expense.name.toLowerCase().includes(searchText)
+        const matchesCategory = selectedCategory === "All" || expense.category === selectedCategory
+          
+        return matchesCategory && matchesSearch
     })
+
     displayExpenses(filteredExpenses)
 }
 
@@ -102,11 +119,11 @@ function displayExpenses(expensesToDisplay = expenses){
         amountElement.textContent = "$" + expense.amount
 
         const dateElement = document.createElement("span")
-        dateElement.classList.add = ("expense-date")
+        dateElement.classList.add("expense-date")
         dateElement.textContent = expense.date
 
         const categoryElement = document.createElement("span")
-        categoryElement.classList.add = ("expense-category")
+        categoryElement.classList.add("expense-category")
         categoryElement.textContent = expense.category
 
         expenseInfo.appendChild(nameElement)
@@ -139,7 +156,8 @@ function deleteExpense(id){
     // after deleting it will prevent coming up on list
     localStorage.setItem("expenses", JSON.stringify(expenses))
 
-    displayExpenses()
+    // displayExpenses()
+    filterExpenses()
     // here i need to call the calculate function which will update after every deletion
     calculateTotal()
 
