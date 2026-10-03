@@ -1,4 +1,5 @@
 let expenses = JSON.parse(localStorage.getItem("expenses")) || []
+let editingExpenseId = null
 
 const expenseName = document.getElementById("expanseName")
 const expenseAmount = document.getElementById("expanseAmount")
@@ -51,7 +52,20 @@ function addExpense(){
         return
     }
 
-    const expense = {
+    if (editingExpenseId !== null) {
+         
+        const expense = expenses.find(function(expense){
+            return expense.id === editingExpenseId
+        })
+
+        expense.name = name
+        expense.amount = amount
+        expense.date = date
+        expense.category = category
+        
+    } else {
+
+     const expense = {
         id: Date.now(),
         name: name,
         amount: amount, 
@@ -61,6 +75,8 @@ function addExpense(){
 
     expenses.push(expense)
 
+    }
+
     // saving items in local stroge for better memory function
     localStorage.setItem("expenses", JSON.stringify(expenses))
 
@@ -69,6 +85,9 @@ function addExpense(){
     message.textContent = ""
     expenseDate.value = ""
     expenseCategory.value = ""
+
+    editingExpenseId = null
+    addButton.textContent = "Add Expense"
 
     //  here i need to call the display function and calulate funtion
     displayExpenses()
@@ -131,6 +150,15 @@ function displayExpenses(expensesToDisplay = expenses){
         expenseInfo.appendChild(dateElement)
         expenseInfo.appendChild(categoryElement)
 
+        const editButton = document.createElement("button")
+        editButton.textContent = "Edit"
+        editButton.classList.add("edit-btn")
+
+        editButton.addEventListener("click", function (){
+            editExpense(expense.id)
+
+        })
+
         const deleteButton = document.createElement("button")
         deleteButton.textContent = "Delete"
         deleteButton.classList.add("delete-btn")
@@ -142,10 +170,27 @@ function displayExpenses(expensesToDisplay = expenses){
 
         li.appendChild(expenseInfo)
         li.appendChild(deleteButton)
+        li.appendChild(editButton)
 
         expenseList.appendChild(li)
 
     })
+}
+
+function editExpense(id){
+    const expense = expenses.find(function(expense){
+             return expense.id === id
+    })
+
+    editingExpenseId = id
+
+    expenseName.value = expense.name
+    expenseAmount.value = expense.amount
+    expenseDate.value = expense.date
+    expenseCategory.value = expense.category
+
+    addButton.textContent = "Update expense"
+    
 }
 
 function deleteExpense(id){
