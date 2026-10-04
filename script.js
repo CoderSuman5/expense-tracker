@@ -1,4 +1,5 @@
 let expenses = JSON.parse(localStorage.getItem("expenses")) || []
+let savedIncome = Number(localStorage.getItem("income")) || 0
 let editingExpenseId = null
 
 const expenseName = document.getElementById("expanseName")
@@ -11,10 +12,15 @@ const expenseDate = document.getElementById("expenseDate")
 const expenseCategory = document.getElementById("expenseCategory")
 const searchInput = document.getElementById("searchInput")
 const filterCategory = document.getElementById("filterCategory")
+const incomeAmount = document.getElementById("incomeAmount")
+const saveIncomeBtn = document.getElementById("saveIncomeBtn")
+const income = document.getElementById("income")
+const balance = document.getElementById("balance")
 
 addButton.addEventListener("click", addExpense)
 searchInput.addEventListener("input", filterExpenses)
 filterCategory.addEventListener("change", filterExpenses)
+saveIncomeBtn.addEventListener("click", saveIncome)
 
 function addExpense(){
     const name = expenseName.value.trim()
@@ -193,6 +199,19 @@ function editExpense(id){
     
 }
 
+function saveIncome(){
+    const amount = Number(incomeAmount.value)
+
+    if(amount <= 0){
+        return
+    }
+
+    savedIncome = amount
+    localStorage.setItem("income", savedIncome)
+    incomeAmount.value = ""
+    calculateBalance()
+}
+
 function deleteExpense(id){
     expenses = expenses.filter(function(expense){
             return expense.id !== id
@@ -200,6 +219,8 @@ function deleteExpense(id){
 
     // after deleting it will prevent coming up on list
     localStorage.setItem("expenses", JSON.stringify(expenses))
+
+    localStorage.setItem("income", savedIncome)
 
     // displayExpenses()
     filterExpenses()
@@ -218,5 +239,18 @@ function calculateTotal(){
     total.textContent = "$" + totalAmount
 }
 
+function calculateBalance(){
+    income.textContent = "$" + savedIncome
+
+    let totalAmount = 0
+
+    expenses.forEach(function(expense){
+        totalAmount = totalAmount + expense.amount
+    })
+
+    balance.textContent = "$" + (savedIncome - totalAmount)
+}
+
 displayExpenses()
 calculateTotal()
+calculateBalance()

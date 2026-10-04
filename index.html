@@ -10,6 +10,16 @@
 <body>
      <div class="container">
         <h1>Expanse Tracker</h1>
+
+        <div>
+          <input 
+               type="text"
+               id="incomeAmount"
+               placeholder="Enter your income"
+               >
+               <button id="saveIncomeBtn">Save Income</button>
+        </div>
+
         <!-- adding expanse section -->
         <div class="expanse-form">
            <input type="text" id="expanseName" placeholder="Expanse name">
@@ -58,8 +68,14 @@
 
           <!-- total expanse -->
            <div class="total-box">
-            <h2>Total Expanse</h2>
+            <h2>Total Expanses</h2>
             <p id="total">0</p>
+            
+            <h2>Income</h2>
+            <p id="income">$0</p>
+
+            <h2>Balance</h2>
+            <p id="balance">0</p>
            </div>
      </div>
 
