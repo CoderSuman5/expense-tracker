@@ -16,6 +16,7 @@ const incomeAmount = document.getElementById("incomeAmount")
 const saveIncomeBtn = document.getElementById("saveIncomeBtn")
 const income = document.getElementById("income")
 const balance = document.getElementById("balance")
+const categorySummary = document.getElementById("categorySummary")
 
 addButton.addEventListener("click", addExpense)
 searchInput.addEventListener("input", filterExpenses)
@@ -64,6 +65,11 @@ function addExpense(){
             return expense.id === editingExpenseId
         })
 
+        if (!expense) {
+            console.log("Expense not found");
+            return
+        }
+
         expense.name = name
         expense.amount = amount
         expense.date = date
@@ -98,7 +104,8 @@ function addExpense(){
     //  here i need to call the display function and calulate funtion
     displayExpenses()
     calculateTotal()
-
+    calculateBalance()
+    calculateCategorySummary()
 }
 
 // function searchExpenses(){
@@ -226,6 +233,9 @@ function deleteExpense(id){
     filterExpenses()
     // here i need to call the calculate function which will update after every deletion
     calculateTotal()
+    calculateBalance()
+    calculateCategorySummary()
+
 
 }
 
@@ -251,6 +261,32 @@ function calculateBalance(){
     balance.textContent = "$" + (savedIncome - totalAmount)
 }
 
+function calculateCategorySummary(){
+
+    const categoryTotals = {}
+
+    expenses.forEach(function(expense){
+
+        if (categoryTotals[expense.category]) {
+            categoryTotals[expense.category] = categoryTotals[expense.category] + expense.amount
+        } else {
+            categoryTotals[expense.category] = expense.amount
+            
+        }
+    })
+    
+    categorySummary.innerHTML = ""
+
+    for(const category in categoryTotals){
+
+        const categoryItem = document.createElement("p")
+        categoryItem.textContent = category + ": $" + categoryTotals[category]
+        categorySummary.appendChild(categoryItem)
+    }
+    
+}
+
 displayExpenses()
 calculateTotal()
 calculateBalance()
+calculateCategorySummary()
