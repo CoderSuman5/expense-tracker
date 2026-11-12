@@ -1,91 +1,217 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Expense Tracker</title>
+    <meta name="theme-color" content="#f5f8f7">
+    <title>Mintary | Expense Tracker</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-     <div class="container">
-        <h1>Expanse Tracker</h1>
-
-        <div>
-          <input 
-               type="text"
-               id="incomeAmount"
-               placeholder="Enter your income"
-               >
-               <button id="saveIncomeBtn">Save Income</button>
+    <header class="topbar">
+        <a class="brand" href="#" aria-label="Mintary home">
+            <span class="brand-icon" aria-hidden="true">▣</span>
+            <span class="brand-copy">
+                <strong>Mintary</strong>
+                <small>Smart expense tracking</small>
+            </span>
+        </a>
+        <div class="topbar-actions">
+            <span class="live-label"><span class="live-dot"></span> Your personal finance dashboard</span>
         </div>
+    </header>
 
-        <!-- adding expanse section -->
-        <div class="expanse-form">
-           <input type="text" id="expanseName" placeholder="Expanse name">
-           <input type="number" id="expanseAmount" placeholder="Amount">
-           <input type="date" id="expenseDate" placeholder="date">
+    <main class="dashboard">
+        <section class="welcome-row">
+            <div>
+                <p class="eyebrow">PERSONAL FINANCE</p>
+                <h1>Good overview, better decisions.</h1>
+                <p class="welcome-copy">Keep track of your money, one expense at a time.</p>
+            </div>
+        </section>
 
-           <select name="category" id="expenseCategory">
-             <option value="select category">Select Category</option>
-             <option value="food"> Food</option>
-             <option value="travel">Travel</option>
-             <option value="shoping">Shoping</option>
-             <option value="bills">Bills</option>
-             <option value="entertainment">Entertainment</option>
-             <option value="health">Health</option>
-             <option value="other">Other</option>
-           </select>
+        <section class="stats-grid" aria-label="Financial summary">
+            <article class="stat-card">
+                <div class="stat-icon income-icon" aria-hidden="true">↗</div>
+                <div>
+                    <p class="stat-label">Income</p>
+                    <p class="stat-value" id="income">₹0</p>
+                    <p class="stat-note">Your recorded income</p>
+                </div>
+            </article>
+            <article class="stat-card">
+                <div class="stat-icon expense-icon" aria-hidden="true">↘</div>
+                <div>
+                    <p class="stat-label">Total expenses</p>
+                    <p class="stat-value" id="total">₹0</p>
+                    <p class="stat-note">Across all recorded expenses</p>
+                </div>
+            </article>
+            <article class="stat-card">
+                <div class="stat-icon balance-icon" aria-hidden="true">◈</div>
+                <div>
+                    <p class="stat-label">Available balance</p>
+                    <p class="stat-value" id="balance">₹0</p>
+                    <p class="stat-note">Income minus expenses</p>
+                </div>
+            </article>
+        </section>
 
-           <button id="addBtn">Add Expanse</button>
+        <div class="dashboard-grid">
+            <div class="main-column">
+                <section class="panel add-panel">
+                    <div class="section-heading">
+                        <span class="heading-icon">＋</span>
+                        <div>
+                            <h2 id="formHeading">Add an expense</h2>
+                            <p>Enter the details of your transaction.</p>
+                        </div>
+                    </div>
+
+                    <div class="expense-form">
+                        <div class="form-grid">
+                            <div class="field">
+                                <label for="expanseName">Expense name</label>
+                                <input type="text" id="expanseName" placeholder="e.g. Groceries" autocomplete="off">
+                            </div>
+                            <div class="field">
+                                <label for="expanseAmount">Amount (₹)</label>
+                                <input type="number" id="expanseAmount" placeholder="0.00" min="0.01" step="0.01">
+                            </div>
+                            <div class="field">
+                                <label for="expenseDate">Date</label>
+                                <input type="date" id="expenseDate">
+                            </div>
+                            <div class="field">
+                                <label for="expenseCategory">Category</label>
+                                <select id="expenseCategory">
+                                    <option value="">Select category</option>
+                                    <option value="food">Food &amp; Dining</option>
+                                    <option value="travel">Travel</option>
+                                    <option value="shopping">Shopping</option>
+                                    <option value="bills">Bills</option>
+                                    <option value="entertainment">Entertainment</option>
+                                    <option value="health">Health</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button id="addBtn" class="primary-button" type="button">＋ Add expense</button>
+                        <p id="message" class="form-message" role="status" aria-live="polite"></p>
+                    </div>
+                </section>
+
+                <section class="panel income-panel">
+                    <div class="section-heading compact-heading">
+                        <span class="heading-icon income-heading-icon">₹</span>
+                        <div>
+                            <h2>Update your income</h2>
+                            <p>Set the income used to calculate your balance.</p>
+                        </div>
+                    </div>
+                    <div class="income-entry">
+                        <label class="sr-only" for="incomeAmount">Income amount</label>
+                        <input type="number" id="incomeAmount" placeholder="Enter income amount (₹)" min="0" step="0.01">
+                        <button id="saveIncomeBtn" class="secondary-button" type="button">Save income</button>
+                    </div>
+                </section>
+
+                <section class="panel recent-panel">
+                    <div class="section-heading recent-heading">
+                        <div>
+                            <h2>Recent expenses</h2>
+                            <p>Your transactions, all in one place.</p>
+                        </div>
+                        <span class="count-pill" id="expenseCount">0 entries</span>
+                    </div>
+
+                    <div class="filters">
+                        <div class="field search-field">
+                            <label for="searchInput">Search</label>
+                            <input type="search" id="searchInput" placeholder="Search expense name...">
+                        </div>
+                        <div class="field">
+                            <label for="filterCategory">Category</label>
+                            <select id="filterCategory">
+                                <option value="all">All categories</option>
+                                <option value="food">Food &amp; Dining</option>
+                                <option value="travel">Travel</option>
+                                <option value="shopping">Shopping</option>
+                                <option value="bills">Bills</option>
+                                <option value="entertainment">Entertainment</option>
+                                <option value="health">Health</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="field">
+                            <label for="filterDate">Month</label>
+                            <input type="month" id="filterDate">
+                        </div>
+                        <button id="clearFiltersBtn" class="clear-button" type="button">Clear filters</button>
+                    </div>
+
+                    <ul id="expenseList" class="expense-list"></ul>
+                </section>
+            </div>
+
+            <aside class="side-column">
+                <section class="panel insights-panel">
+                    <div class="section-heading">
+                        <span class="heading-icon insight-heading-icon">✧</span>
+                        <div>
+                            <h2>Spending insights</h2>
+                            <p>A quick look at your recorded expenses.</p>
+                        </div>
+                    </div>
+                    <div class="insight-summary">
+                        <div>
+                            <p class="insight-label">Transactions recorded</p>
+                            <strong id="insightCount">0</strong>
+                        </div>
+                        <div>
+                            <p class="insight-label">Average expense</p>
+                            <strong id="averageExpense">₹0</strong>
+                        </div>
+                    </div>
+                    <div class="category-chart-area">
+                        <div class="donut-chart" id="categoryChart" role="img" aria-label="Expense category breakdown">
+                            <div class="donut-hole">
+                                <strong id="chartTotal">₹0</strong>
+                                <span>Total spent</span>
+                            </div>
+                        </div>
+                        <div id="categorySummary" class="category-legend">
+                            <p class="summary-empty">Your category breakdown will appear here.</p>
+                        </div>
+                    </div>
+                    <div class="top-category">
+                        <span class="top-category-mark">✦</span>
+                        <div>
+                            <p class="insight-label">Highest spending category</p>
+                            <strong id="topCategory">No expenses yet</strong>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="panel tips-panel">
+                    <div class="section-heading compact-heading">
+                        <span class="heading-icon tip-heading-icon">☼</span>
+                        <div>
+                            <h2>Money habits</h2>
+                            <p>Small steps that make tracking useful.</p>
+                        </div>
+                    </div>
+                    <ul class="tips-list">
+                        <li>Record expenses regularly so your totals stay accurate.</li>
+                        <li>Use categories to understand where your money goes.</li>
+                        <li>Review your monthly spending and plan ahead.</li>
+                    </ul>
+                </section>
+            </aside>
         </div>
+        <footer class="page-footer">Mintary · A simple way to stay on top of your money.</footer>
+    </main>
 
-        <div class="search-box">
-              <input type="search" id="searchInput" placeholder="search expenses...">
-        </div>
-
-        <div class="filter-box">
-          <select  id="filterCategory">
-            <option value="All">All Categories</option>
-            <option value="Food">Food</option>
-            <option value="Travel">Travel</option>
-            <option value="Shoping">Shoping</option>
-            <option value="Bills">Bills</option>
-            <option value="Entertainment">Entertainment</option>
-            <option value="Health">Health</option>
-            <option value="Other">Other</option>
-          </select>
-        </div>
-        
-        <!-- message -->
-         <p id="message"></p>
-
-         <!-- expanse list -->
-          <div>
-            <h2>Expanses</h2>
-            <ul id="expenseList"></ul>
-          </div>
-
-          <!-- total expanse -->
-           <div class="total-box">
-            <h2>Total Expanses</h2>
-            <p id="total">0</p>
-            
-            <h2>Income</h2>
-            <p id="income">$0</p>
-
-            <h2>Balance</h2>
-            <p id="balance">0</p>
-           </div>
-            
-           <!-- expense summary -->
-           <div class="category-summary">
-            <h2>Expense Summary</h2>
-            <div id="categorySummary"></div>
-           </div>
-     </div>
-
-     
     <script src="script.js"></script>
 </body>
 </html>
